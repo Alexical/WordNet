@@ -37,7 +37,40 @@ abstract class CollectionTest<E> {
     }
 
     @Test
+    public void testAddSingle() {
+        E r = getData().iterator().next();
+        getExpected().add(r);
+        getActual().add(r);
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+    }
+
+    @Test
+    public void testAddMultiple() {
+        getExpected().addAll(getData());
+        getActual().addAll(getData());
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+    }
+
+    @Test
+    public void testClearDefault() {
+        getExpected().clear();
+        getActual().clear();
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+    }
+
+    @Test
     public abstract void testCopyConstructor();
+
+    protected abstract Collection<E> getData();
 
     protected abstract Collection<E> getExpected();
 

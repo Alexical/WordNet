@@ -10,7 +10,7 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FastArrayDequeTest extends ModifiableCollectionTest<Integer> {
+class FastArrayDequeTest extends CollectionTest<Integer> {
 
     private static final int N = 1000;
     private static final int BOUND = 10000;
@@ -185,6 +185,11 @@ class FastArrayDequeTest extends ModifiableCollectionTest<Integer> {
     }
 
     @Override
+    public String toString() {
+        return String.format("%s\n%s", expected, actual);
+    }
+
+    @Override
     protected Collection<Integer> getData() {
         return data;
     }
@@ -197,10 +202,5 @@ class FastArrayDequeTest extends ModifiableCollectionTest<Integer> {
     @Override
     protected Collection<Integer> getActual() {
         return actual;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s\n%s", expected, actual);
     }
 }

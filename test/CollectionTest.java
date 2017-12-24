@@ -5,10 +5,10 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-abstract class CollectionTest<Item> {
+abstract class CollectionTest<E> {
 
-    protected Collection<Item> expected;
-    protected Collection<Item> actual;
+    protected Collection<E> expected;
+    protected Collection<E> actual;
 
     @Test
     public void testIteratorDefault() {
@@ -29,11 +29,11 @@ abstract class CollectionTest<Item> {
         }
     }
 
-    protected void setExpected(Collection<Item> expected) {
+    protected void setExpected(Collection<E> expected) {
         this.expected = expected;
     }
 
-    protected void setActual(Collection<Item> actual) {
+    protected void setActual(Collection<E> actual) {
         this.actual = actual;
     }
 

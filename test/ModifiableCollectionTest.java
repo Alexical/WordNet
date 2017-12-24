@@ -4,11 +4,11 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-abstract class ModifiableCollectionTest<Item> extends CollectionTest<Item> {
+abstract class ModifiableCollectionTest<E> extends CollectionTest<E> {
 
     @Test
     public void testAddSingle() {
-        Item r = data().iterator().next();
+        E r = data().iterator().next();
         expected.add(r);
         actual.add(r);
         assertIterableEquals(expected, actual);
@@ -31,6 +31,6 @@ abstract class ModifiableCollectionTest<Item> extends CollectionTest<Item> {
         }
     }
 
-    protected abstract Collection<Item> data();
+    protected abstract Collection<E> data();
 
 }

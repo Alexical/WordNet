@@ -21,6 +21,16 @@ abstract class ModifiableCollectionTest<Item> extends CollectionTest<Item> {
         assertIterableEquals(expected, actual);
     }
 
+    @Test
+    public void testClearDefault() {
+        try {
+            actual.clear();
+            assertEquals(0, actual.size());
+            assertTrue(actual.isEmpty());
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
     protected abstract Collection<Item> data();
 
 }

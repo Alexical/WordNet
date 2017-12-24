@@ -29,16 +29,6 @@ abstract class CollectionTest<Item> {
         }
     }
 
-    @Test
-    public void testClearDefault() {
-        try {
-            actual.clear();
-            assertEquals(0, actual.size());
-            assertTrue(actual.isEmpty());
-        } catch (UnsupportedOperationException e) {
-        }
-    }
-
     protected void setExpected(Collection<Item> expected) {
         this.expected = expected;
     }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 abstract class CollectionTest<E> {
 
     @Test
-    public void testAdd() {
+    public final void testAdd() {
         E r = data().iterator().next();
         expected().add(r);
         actual().add(r);
@@ -19,7 +19,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testAddAll() {
+    public final void testAddAll() {
         expected().addAll(data());
         actual().addAll(data());
 
@@ -29,7 +29,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testClearDefault() {
+    public final void testClearDefault() {
         expected().clear();
         actual().clear();
 
@@ -39,7 +39,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testIteratorDefault() {
+    public final void testIteratorDefault() {
         assertIterableEquals(expected(), actual());
 
         assertFalse(actual().iterator().hasNext());
@@ -50,7 +50,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testIsEmptyDefault() {
+    public final void testIsEmptyDefault() {
         assertIterableEquals(expected(), actual());
 
         assertTrue(actual().isEmpty());
@@ -59,7 +59,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testSizeDefault() {
+    public final void testSizeDefault() {
         assertIterableEquals(expected(), actual());
 
         assertEquals(0, actual().size());

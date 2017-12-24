@@ -92,6 +92,20 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
     }
 
     @Test
+    public void testPush() {
+        for (int r : data) {
+            expected.push(r);
+            actual.push(r);
+
+            assertIterableEquals(expected, actual);
+            assertEquals(expected.size(), actual.size());
+            assertEquals(expected.isEmpty(), actual.isEmpty());
+            assertEquals(expected.getFirst(), actual.getFirst());
+            assertEquals(expected.getLast(), actual.getLast());
+        }
+    }
+
+    @Test
     public void testAddFirst() {
         for (int r : data) {
             expected.addFirst(r);
@@ -139,6 +153,48 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
     @Test
     public void testGetLast() {
         assertThrows(NoSuchElementException.class, actual::getLast);
+    }
+
+    @Test
+    public void testPop() {
+        assertThrows(NoSuchElementException.class, actual::pop);
+
+        expected.addAll(data);
+        actual.addAll(data);
+
+        while (!expected.isEmpty()) {
+            assertEquals(expected.getFirst(), actual.getFirst());
+            assertEquals(expected.getLast(), actual.getLast());
+
+            assertEquals(expected.pop(), actual.pop());
+
+            assertIterableEquals(expected, actual);
+            assertEquals(expected.size(), actual.size());
+            assertEquals(expected.isEmpty(), actual.isEmpty());
+        }
+
+        assertThrows(NoSuchElementException.class, actual::pop);
+    }
+
+    @Test
+    public void testRemove() {
+        assertThrows(NoSuchElementException.class, actual::remove);
+
+        expected.addAll(data);
+        actual.addAll(data);
+
+        while (!expected.isEmpty()) {
+            assertEquals(expected.getFirst(), actual.getFirst());
+            assertEquals(expected.getLast(), actual.getLast());
+
+            assertEquals(expected.remove(), actual.remove());
+
+            assertIterableEquals(expected, actual);
+            assertEquals(expected.size(), actual.size());
+            assertEquals(expected.isEmpty(), actual.isEmpty());
+        }
+
+        assertThrows(NoSuchElementException.class, actual::remove);
     }
 
     @Test

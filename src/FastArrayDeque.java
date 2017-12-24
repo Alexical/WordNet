@@ -52,6 +52,10 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
         return true;
     }
 
+    public void push(E item) {
+        addFirst(item);
+    }
+
     public void addFirst(E item) {
         if (n == a.length)
             resize(2 * a.length);
@@ -69,6 +73,14 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
             j = 0;
         a[j++] = item;
         ++n;
+    }
+
+    public E remove() {
+        return removeFirst();
+    }
+
+    public E pop() {
+        return removeFirst();
     }
 
     public E removeFirst() {

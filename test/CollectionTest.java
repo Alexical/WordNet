@@ -9,68 +9,68 @@ abstract class CollectionTest<E> {
 
     @Test
     public void testAdd() {
-        E r = getData().iterator().next();
-        getExpected().add(r);
-        getActual().add(r);
+        E r = data().iterator().next();
+        expected().add(r);
+        actual().add(r);
 
-        assertIterableEquals(getExpected(), getActual());
-        assertEquals(getExpected().size(), getActual().size());
-        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+        assertIterableEquals(expected(), actual());
+        assertEquals(expected().size(), actual().size());
+        assertEquals(actual().isEmpty(), actual().isEmpty());
     }
 
     @Test
     public void testAddAll() {
-        getExpected().addAll(getData());
-        getActual().addAll(getData());
+        expected().addAll(data());
+        actual().addAll(data());
 
-        assertIterableEquals(getExpected(), getActual());
-        assertEquals(getExpected().size(), getActual().size());
-        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+        assertIterableEquals(expected(), actual());
+        assertEquals(expected().size(), actual().size());
+        assertEquals(actual().isEmpty(), actual().isEmpty());
     }
 
     @Test
     public void testClearDefault() {
-        getExpected().clear();
-        getActual().clear();
+        expected().clear();
+        actual().clear();
 
-        assertIterableEquals(getExpected(), getActual());
-        assertEquals(getExpected().size(), getActual().size());
-        assertEquals(getActual().isEmpty(), getActual().isEmpty());
+        assertIterableEquals(expected(), actual());
+        assertEquals(expected().size(), actual().size());
+        assertEquals(actual().isEmpty(), actual().isEmpty());
     }
 
     @Test
     public void testIteratorDefault() {
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
 
-        assertFalse(getActual().iterator().hasNext());
+        assertFalse(actual().iterator().hasNext());
         assertThrows(NoSuchElementException.class,
-                     getActual().iterator()::next);
+                     actual().iterator()::next);
 
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
     }
 
     @Test
     public void testIsEmptyDefault() {
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
 
-        assertTrue(getActual().isEmpty());
+        assertTrue(actual().isEmpty());
 
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
     }
 
     @Test
     public void testSizeDefault() {
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
 
-        assertEquals(0, getActual().size());
+        assertEquals(0, actual().size());
 
-        assertIterableEquals(getExpected(), getActual());
+        assertIterableEquals(expected(), actual());
     }
 
-    protected abstract Collection<E> getData();
+    protected abstract Collection<E> data();
 
-    protected abstract Collection<E> getExpected();
+    protected abstract Collection<E> expected();
 
-    protected abstract Collection<E> getActual();
+    protected abstract Collection<E> actual();
 
 }

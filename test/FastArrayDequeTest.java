@@ -189,17 +189,17 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
     }
 
     @Override
-    protected Collection<Integer> getData() {
+    protected Collection<Integer> data() {
         return data;
     }
 
     @Override
-    protected Collection<Integer> getExpected() {
+    protected Collection<Integer> expected() {
         return expected;
     }
 
     @Override
-    protected Collection<Integer> getActual() {
+    protected Collection<Integer> actual() {
         return actual;
     }
 }

@@ -10,8 +10,7 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
 
     private E[] a;
     private int n;
-    private int first;
-    private int last;
+    private int j;
 
     public FastArrayDeque() {
         this(DEFAULT_CAPACITY);
@@ -45,8 +44,7 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
 
     public void clear() {
         n = 0;
-        first = 0;
-        last = a.length;
+        j = a.length;
     }
 
     public boolean add(E item) {
@@ -57,54 +55,55 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
     public void addFirst(E item) {
         if (n == a.length)
             resize(2 * a.length);
-        if (first == 0)
-            first = a.length;
-        a[--first] = item;
-        n++;
+        int i = i();
+        if (i == 0)
+            i = a.length;
+        a[--i] = item;
+        ++n;
     }
 
     public void addLast(E item) {
         if (n == a.length)
             resize(2 * a.length);
-        if (last == a.length)
-            last = 0;
-        a[last++] = item;
-        n++;
+        if (j == a.length)
+            j = 0;
+        a[j++] = item;
+        ++n;
     }
 
     public E removeFirst() {
         E item = getFirst();
-        a[first++] = null;
-        n--;
-        if (first == a.length)
-            first = 0;
+        a[i()] = null;
+        --n;
         return item;
     }
 
     public E removeLast() {
         E item = getLast();
-        a[--last] = null;
-        n--;
-        if (last == 0)
-            last = a.length;
+        a[--j] = null;
+        --n;
+        if (j == 0)
+            j = a.length;
         return item;
     }
 
     public E getFirst() {
         if (isEmpty())
-            throw new NoSuchElementException("Deque underflow");
-        return a[first];
+            throw new NoSuchElementException();
+
+        return a[i()];
     }
 
     public E getLast() {
         if (isEmpty())
-            throw new NoSuchElementException("Deque underflow");
-        return a[last - 1];
+            throw new NoSuchElementException();
+
+        return a[j - 1];
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new ArrayIterator();
+        return new RingIterator();
     }
 
     @Override
@@ -112,13 +111,13 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
         return Arrays.toString(a);
     }
 
-    private class ArrayIterator implements Iterator<E> {
+    private class RingIterator implements Iterator<E> {
 
-        private int i = 0;
+        private int r = n;
 
         @Override
         public boolean hasNext() {
-            return i < n;
+            return r > 0;
         }
 
         @Override
@@ -130,9 +129,11 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
         public E next() {
             if (!hasNext())
                 throw new NoSuchElementException();
-            E item = a[i + first < a.length ? i + first
-                                               : i + first - a.length];
-            i++;
+            int curr = j - r;
+            if (curr < 0)
+                curr += a.length;
+            E item = a[curr];
+            --r;
             return item;
         }
 
@@ -140,15 +141,22 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
 
     private void resize(int capacity) {
         E[] dest = (E[]) new Object[capacity];
-        if (first < last) {
-            System.arraycopy(a, first, dest, 0, n);
+        int i = i();
+        if (i < j) {
+            System.arraycopy(a, i, dest, 0, n);
         } else {
-            System.arraycopy(a, first, dest, 0, a.length - first);
-            System.arraycopy(a, 0, dest, a.length - first, last);
+            System.arraycopy(a, i, dest, 0, a.length - i);
+            System.arraycopy(a, 0, dest, a.length - i, j);
         }
         a = dest;
-        first = 0;
-        last = n;
+        j = n;
+    }
+
+    private int i() {
+        int i = j - n;
+        if (i < 0)
+            i += a.length;
+        return i;
     }
 
 }

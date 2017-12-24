@@ -6,14 +6,14 @@ import java.util.NoSuchElementException;
 
 public class FastArrayDeque<E> extends AbstractCollection<E> {
 
-    private static final int DEFAULT_CAPACITY = 16;
+    private static final int INIT_CAPACITY = 16;
 
     private E[] a;
     private int n;
     private int j;
 
     public FastArrayDeque() {
-        this(DEFAULT_CAPACITY);
+        this(INIT_CAPACITY);
     }
 
     public FastArrayDeque(Collection<? extends E> c) {
@@ -34,7 +34,7 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
     }
 
     public void reset() {
-        reset(DEFAULT_CAPACITY);
+        reset(INIT_CAPACITY);
     }
 
     public void reset(int initialCapacity) {

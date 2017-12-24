@@ -8,36 +8,7 @@ import org.junit.jupiter.api.Test;
 abstract class CollectionTest<E> {
 
     @Test
-    public void testIteratorDefault() {
-        assertIterableEquals(getExpected(), getActual());
-
-        assertFalse(getActual().iterator().hasNext());
-        assertThrows(NoSuchElementException.class,
-                     getActual().iterator()::next);
-
-        assertIterableEquals(getExpected(), getActual());
-    }
-
-    @Test
-    public void testSizeDefault() {
-        assertIterableEquals(getExpected(), getActual());
-
-        assertEquals(0, getActual().size());
-
-        assertIterableEquals(getExpected(), getActual());
-    }
-
-    @Test
-    public void testIsEmptyDefault() {
-        assertIterableEquals(getExpected(), getActual());
-
-        assertTrue(getActual().isEmpty());
-
-        assertIterableEquals(getExpected(), getActual());
-    }
-
-    @Test
-    public void testAddSingle() {
+    public void testAdd() {
         E r = getData().iterator().next();
         getExpected().add(r);
         getActual().add(r);
@@ -48,7 +19,7 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public void testAddMultiple() {
+    public void testAddAll() {
         getExpected().addAll(getData());
         getActual().addAll(getData());
 
@@ -68,7 +39,33 @@ abstract class CollectionTest<E> {
     }
 
     @Test
-    public abstract void testCopyConstructor();
+    public void testIteratorDefault() {
+        assertIterableEquals(getExpected(), getActual());
+
+        assertFalse(getActual().iterator().hasNext());
+        assertThrows(NoSuchElementException.class,
+                     getActual().iterator()::next);
+
+        assertIterableEquals(getExpected(), getActual());
+    }
+
+    @Test
+    public void testIsEmptyDefault() {
+        assertIterableEquals(getExpected(), getActual());
+
+        assertTrue(getActual().isEmpty());
+
+        assertIterableEquals(getExpected(), getActual());
+    }
+
+    @Test
+    public void testSizeDefault() {
+        assertIterableEquals(getExpected(), getActual());
+
+        assertEquals(0, getActual().size());
+
+        assertIterableEquals(getExpected(), getActual());
+    }
 
     protected abstract Collection<E> getData();
 

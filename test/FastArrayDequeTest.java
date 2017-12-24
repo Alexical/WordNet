@@ -31,13 +31,64 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
     }
 
     @Test
-    public void testGetFirst() {
-        assertThrows(NoSuchElementException.class, actual::getFirst);
+    public void testAddAndClearAtRandom() {
+        Iterator<Integer> dataIter = data.iterator();
+
+        for (int i = 0; i < N; i++) {
+            if (rand.nextInt(100) > 5) {
+                Integer r = dataIter.next();
+                if (rand.nextBoolean()) {
+                    expected.addFirst(r);
+                    actual.addFirst(r);
+                } else {
+                    expected.addLast(r);
+                    actual.addLast(r);
+                }
+
+                assertEquals(expected.getFirst(), actual.getFirst());
+                assertEquals(expected.getLast(), actual.getLast());
+            } else {
+                expected.clear();
+                actual.clear();
+            }
+
+            assertIterableEquals(expected, actual);
+            assertEquals(expected.size(), actual.size());
+            assertEquals(expected.isEmpty(), actual.isEmpty());
+        }
     }
 
     @Test
-    public void testGetLast() {
-        assertThrows(NoSuchElementException.class, actual::getLast);
+    public void testAddAndRemoveAtRandom() {
+        expected.addAll(data);
+        actual.addAll(data);
+
+        Iterator<Integer> dataIter = data.iterator();
+
+        for (int i = 0; i < N; i++) {
+            if (rand.nextBoolean()) {
+                Integer r = dataIter.next();
+                if (rand.nextBoolean()) {
+                    expected.addFirst(r);
+                    actual.addFirst(r);
+                } else {
+                    expected.addLast(r);
+                    actual.addLast(r);
+                }
+            } else {
+                if (rand.nextBoolean()) {
+                    assertEquals(expected.removeFirst(), actual.removeFirst());
+                } else {
+                    assertEquals(expected.removeLast(), actual.removeLast());
+                }
+            }
+
+            assertIterableEquals(expected, actual);
+            assertEquals(expected.size(), actual.size());
+            assertEquals(expected.isEmpty(), actual.isEmpty());
+            assertEquals(expected.getFirst(), actual.getFirst());
+            assertEquals(expected.getLast(), actual.getLast());
+        }
     }
 
     @Test
@@ -66,6 +117,28 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
             assertEquals(expected.getFirst(), actual.getFirst());
             assertEquals(expected.getLast(), actual.getLast());
         }
+    }
+
+    @Test
+    public void testCopyConstructor() {
+        expected = new ArrayDeque<>(data);
+        actual = new FastArrayDeque<>(data);
+
+        assertIterableEquals(expected, actual);
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected.isEmpty(), actual.isEmpty());
+        assertEquals(expected.getFirst(), actual.getFirst());
+        assertEquals(expected.getLast(), actual.getLast());
+    }
+
+    @Test
+    public void testGetFirst() {
+        assertThrows(NoSuchElementException.class, actual::getFirst);
+    }
+
+    @Test
+    public void testGetLast() {
+        assertThrows(NoSuchElementException.class, actual::getLast);
     }
 
     @Test
@@ -108,80 +181,6 @@ class FastArrayDequeTest extends CollectionTest<Integer> {
         }
 
         assertThrows(NoSuchElementException.class, actual::removeLast);
-    }
-
-    @Test
-    public void testAddAndRemoveAtRandom() {
-        expected.addAll(data);
-        actual.addAll(data);
-
-        Iterator<Integer> dataIter = data.iterator();
-
-        for (int i = 0; i < N; i++) {
-            if (rand.nextBoolean()) {
-                Integer r = dataIter.next();
-                if (rand.nextBoolean()) {
-                    expected.addFirst(r);
-                    actual.addFirst(r);
-                } else {
-                    expected.addLast(r);
-                    actual.addLast(r);
-                }
-            } else {
-                if (rand.nextBoolean()) {
-                    assertEquals(expected.removeFirst(), actual.removeFirst());
-                } else {
-                    assertEquals(expected.removeLast(), actual.removeLast());
-                }
-            }
-
-            assertIterableEquals(expected, actual);
-            assertEquals(expected.size(), actual.size());
-            assertEquals(expected.isEmpty(), actual.isEmpty());
-            assertEquals(expected.getFirst(), actual.getFirst());
-            assertEquals(expected.getLast(), actual.getLast());
-        }
-    }
-
-    @Test
-    public void testAddAndClearAtRandom() {
-        Iterator<Integer> dataIter = data.iterator();
-
-        for (int i = 0; i < N; i++) {
-            if (rand.nextInt(100) > 5) {
-                Integer r = dataIter.next();
-                if (rand.nextBoolean()) {
-                    expected.addFirst(r);
-                    actual.addFirst(r);
-                } else {
-                    expected.addLast(r);
-                    actual.addLast(r);
-                }
-
-                assertEquals(expected.getFirst(), actual.getFirst());
-                assertEquals(expected.getLast(), actual.getLast());
-            } else {
-                expected.clear();
-                actual.clear();
-            }
-
-            assertIterableEquals(expected, actual);
-            assertEquals(expected.size(), actual.size());
-            assertEquals(expected.isEmpty(), actual.isEmpty());
-        }
-    }
-
-    @Test
-    @Override
-    public void testCopyConstructor() {
-        expected = new ArrayDeque<>(data);
-        actual = new FastArrayDeque<>(data);
-
-        assertIterableEquals(expected, actual);
-        assertEquals(expected.size(), actual.size());
-        assertEquals(expected.isEmpty(), actual.isEmpty());
-        assertEquals(expected.getFirst(), actual.getFirst());
-        assertEquals(expected.getLast(), actual.getLast());
     }
 
     @Override

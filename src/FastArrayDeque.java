@@ -17,7 +17,7 @@ public class FastArrayDeque<E> extends AbstractCollection<E> {
         this(DEFAULT_CAPACITY);
     }
 
-    public FastArrayDeque(Collection<E> c) {
+    public FastArrayDeque(Collection<? extends E> c) {
         this(c.size());
         c.forEach(this::addLast);
     }

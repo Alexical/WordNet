@@ -26,20 +26,8 @@ class FastArrayDequeTest extends ModifiableCollectionTest<Integer> {
         data = new ArrayList<>();
         for (int i = 0; i < N; ++i)
             data.add(rand.nextInt(BOUND));
-        setExpected(expected = new ArrayDeque<Integer>());
-        setActual(actual = new FastArrayDeque<Integer>(2));
-    }
-
-    @Test
-    public void testCopyConstructor() {
-        expected = new ArrayDeque<>(data);
-        actual = new FastArrayDeque<>(data);
-
-        assertIterableEquals(expected, actual);
-        assertEquals(expected.size(), actual.size());
-        assertEquals(expected.isEmpty(), actual.isEmpty());
-        assertEquals(expected.getFirst(), actual.getFirst());
-        assertEquals(expected.getLast(), actual.getLast());
+        expected = new ArrayDeque<Integer>();
+        actual = new FastArrayDeque<Integer>(2);
     }
 
     @Test
@@ -183,9 +171,32 @@ class FastArrayDequeTest extends ModifiableCollectionTest<Integer> {
         }
     }
 
+    @Test
     @Override
-    protected Collection<Integer> data() {
+    public void testCopyConstructor() {
+        expected = new ArrayDeque<>(data);
+        actual = new FastArrayDeque<>(data);
+
+        assertIterableEquals(expected, actual);
+        assertEquals(expected.size(), actual.size());
+        assertEquals(expected.isEmpty(), actual.isEmpty());
+        assertEquals(expected.getFirst(), actual.getFirst());
+        assertEquals(expected.getLast(), actual.getLast());
+    }
+
+    @Override
+    protected Collection<Integer> getData() {
         return data;
+    }
+
+    @Override
+    protected Collection<Integer> getExpected() {
+        return expected;
+    }
+
+    @Override
+    protected Collection<Integer> getActual() {
+        return actual;
     }
 
     @Override

@@ -7,34 +7,40 @@ import org.junit.jupiter.api.Test;
 
 abstract class CollectionTest<E> {
 
-    protected Collection<E> expected;
-    protected Collection<E> actual;
-
     @Test
     public void testIteratorDefault() {
-        assertFalse(actual.iterator().hasNext());
-        assertThrows(NoSuchElementException.class, actual.iterator()::next);
+        assertIterableEquals(getExpected(), getActual());
+
+        assertFalse(getActual().iterator().hasNext());
+        assertThrows(NoSuchElementException.class,
+                     getActual().iterator()::next);
+
+        assertIterableEquals(getExpected(), getActual());
     }
 
     @Test
     public void testSizeDefault() {
-        assertEquals(0, actual.size());
+        assertIterableEquals(getExpected(), getActual());
+
+        assertEquals(0, getActual().size());
+
+        assertIterableEquals(getExpected(), getActual());
     }
 
     @Test
     public void testIsEmptyDefault() {
-        try {
-            assertTrue(actual.isEmpty());
-        } catch (UnsupportedOperationException e) {
-        }
+        assertIterableEquals(getExpected(), getActual());
+
+        assertTrue(getActual().isEmpty());
+
+        assertIterableEquals(getExpected(), getActual());
     }
 
-    protected void setExpected(Collection<E> expected) {
-        this.expected = expected;
-    }
+    @Test
+    public abstract void testCopyConstructor();
 
-    protected void setActual(Collection<E> actual) {
-        this.actual = actual;
-    }
+    protected abstract Collection<E> getExpected();
+
+    protected abstract Collection<E> getActual();
 
 }

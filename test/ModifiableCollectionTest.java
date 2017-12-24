@@ -8,29 +8,35 @@ abstract class ModifiableCollectionTest<E> extends CollectionTest<E> {
 
     @Test
     public void testAddSingle() {
-        E r = data().iterator().next();
-        expected.add(r);
-        actual.add(r);
-        assertIterableEquals(expected, actual);
+        E r = getData().iterator().next();
+        getExpected().add(r);
+        getActual().add(r);
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
     }
 
     @Test
     public void testAddMultiple() {
-        expected.addAll(data());
-        actual.addAll(data());
-        assertIterableEquals(expected, actual);
+        getExpected().addAll(getData());
+        getActual().addAll(getData());
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
     }
 
     @Test
     public void testClearDefault() {
-        try {
-            actual.clear();
-            assertEquals(0, actual.size());
-            assertTrue(actual.isEmpty());
-        } catch (UnsupportedOperationException e) {
-        }
+        getExpected().clear();
+        getActual().clear();
+
+        assertIterableEquals(getExpected(), getActual());
+        assertEquals(getExpected().size(), getActual().size());
+        assertEquals(getActual().isEmpty(), getActual().isEmpty());
     }
 
-    protected abstract Collection<E> data();
+    protected abstract Collection<E> getData();
 
 }

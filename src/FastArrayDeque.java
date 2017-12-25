@@ -59,7 +59,7 @@ public class FastArrayDeque<E> extends AbstractQueue<E> implements Deque<E> {
 
     @Override
     public boolean offer(E e) {
-        return offerFirst(e);
+        return offerLast(e);
     }
 
     @Override

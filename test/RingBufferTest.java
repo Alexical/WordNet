@@ -14,7 +14,7 @@ class RingBufferTest extends DequeTest<Integer> {
 
     RingBufferTest() {
         n = 1000;
-        rand = new Random();
+        rand = new Random(3);
         data = new ArrayList<>();
         for (int i = 0; i < n; ++i)
             data.add(rand.nextInt(n * 10));

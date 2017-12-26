@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class FastArrayDeque<E> extends AbstractQueue<E> implements Deque<E> {
+public class RingBuffer<E> extends AbstractQueue<E> implements Deque<E> {
 
     private static final int INIT_CAPACITY = 4;
 
@@ -13,16 +13,16 @@ public class FastArrayDeque<E> extends AbstractQueue<E> implements Deque<E> {
     private int n;
     private int j;
 
-    public FastArrayDeque() {
+    public RingBuffer() {
         this(INIT_CAPACITY);
     }
 
-    public FastArrayDeque(Collection<? extends E> c) {
+    public RingBuffer(Collection<? extends E> c) {
         this(c.size());
         c.forEach(this::add);
     }
 
-    public FastArrayDeque(int initialCapacity) {
+    public RingBuffer(int initialCapacity) {
         reset(initialCapacity);
     }
 

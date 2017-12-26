@@ -1,10 +1,10 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 
-class FastArrayDequeTest extends QueueTest<Integer> {
+class FastArrayDequeTest extends DequeTest<Integer> {
 
     private final int n;
     private final Random rand;
@@ -14,7 +14,7 @@ class FastArrayDequeTest extends QueueTest<Integer> {
 
     FastArrayDequeTest() {
         n = 1000;
-        rand = new Random(0);
+        rand = new Random();
         data = new ArrayList<>();
         for (int i = 0; i < n; ++i)
             data.add(rand.nextInt(n * 2));
@@ -32,9 +32,9 @@ class FastArrayDequeTest extends QueueTest<Integer> {
     List<Integer> getData() { return data; }
 
     @Override
-    Queue<Integer> getExpected() { return expected; }
+    Deque<Integer> getExpected() { return expected; }
 
     @Override
-    Queue<Integer> getActual() { return actual; }
+    Deque<Integer> getActual() { return actual; }
 
 }

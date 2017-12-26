@@ -42,7 +42,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         @AfterEach
         void check() { queuesAreEqual(); }
 
-        @Test @DisplayName("add null throws")
+        @Test @DisplayName("add null throws NullPointerException")
         void addNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
@@ -52,40 +52,34 @@ abstract class QueueTest<E> extends CollectionTest<E> {
             }
         }
 
-        @Test @DisplayName("addAll returns true")
-        void addAllReturnsTrue() {
-            assertTrue(expected.addAll(data));
-            assertTrue(actual.addAll(data));
-        }
-
-        @Test @DisplayName("remove throws")
+        @Test @DisplayName("remove throws NoSuchElementException")
         void removeThrows() {
             for (int i = 0; i < 10; ++i)
                 assertThrows(NoSuchElementException.class, actual::remove);
         }
 
-        @Test @DisplayName("element throws")
+        @Test @DisplayName("element throws NoSuchElementException")
         void elementThrows() {
             for (int i = 0; i < 10; ++i)
                 assertThrows(NoSuchElementException.class, actual::element);
         }
 
-        @Test @DisplayName("offer returns true")
-        void offerReturnsTrue() {
-            for (E e : data) {
-                assertTrue(expected.offer(e));
-                assertTrue(actual.offer(e));
-                queuesAreEqual();
-            }
-        }
-
-        @Test @DisplayName("offer null throws")
+        @Test @DisplayName("offer null throws NullPointerException")
         void offerNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
                              () -> expected.offer(null));
                 assertThrows(NullPointerException.class,
                              () -> actual.offer(null));
+            }
+        }
+
+        @Test @DisplayName("offer each returns true")
+        void offerEachReturnsTrue() {
+            for (E e : data) {
+                assertTrue(expected.offer(e));
+                assertTrue(actual.offer(e));
+                queuesAreEqual();
             }
         }
 
@@ -118,7 +112,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         @AfterEach
         void check() { queuesAreEqual(); }
 
-        @Test @DisplayName("add null throws")
+        @Test @DisplayName("add null throws NullPointerException")
         void addNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
@@ -134,7 +128,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
             assertEquals(e, actual.remove());
         }
 
-        @Test @DisplayName("remove twice throws")
+        @Test @DisplayName("remove twice throws NoSuchElementException")
         void removeTwiceThrows() {
             expected.remove();
             actual.remove();
@@ -152,7 +146,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
             }
         }
 
-        @Test @DisplayName("offer null throws")
+        @Test @DisplayName("offer null throws NullPointerException")
         void offerNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
@@ -200,7 +194,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         @AfterEach
         void check() { queuesAreEqual(); }
 
-        @Test @DisplayName("add null throws")
+        @Test @DisplayName("add null throws NullPointerException")
         void addNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
@@ -219,7 +213,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
             }
         }
 
-        @Test @DisplayName("remove extra throws")
+        @Test @DisplayName("remove extra throws NoSuchElementException")
         void removeExtraThrows() {
             while (!expected.isEmpty()) {
                 expected.remove();
@@ -232,7 +226,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         }
 
         @Test @DisplayName("element returns the first element")
-        void elementReturnsElement() {
+        void elementReturnsFirstElement() {
             E e = data.get(0);
             for (int i = 0; i < 10; ++i) {
                 assertEquals(e, expected.element());
@@ -240,7 +234,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
             }
         }
 
-        @Test @DisplayName("offer null throws")
+        @Test @DisplayName("offer null throws NullPointerException")
         void offerNullThrows() {
             for (int i = 0; i < 10; ++i) {
                 assertThrows(NullPointerException.class,
@@ -260,7 +254,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         }
 
         @Test @DisplayName("poll extra returns null")
-        void pollTwiceReturnsNull() {
+        void pollExtraReturnsNull() {
             while (!expected.isEmpty()) {
                 expected.poll();
                 actual.poll();
@@ -272,7 +266,7 @@ abstract class QueueTest<E> extends CollectionTest<E> {
         }
 
         @Test @DisplayName("peek returns the first element")
-        void peekReturnsTheElement() {
+        void peekReturnsFirstElement() {
             E e = data.get(0);
             for (int i = 0; i < 10; ++i) {
                 assertEquals(e, expected.peek());
@@ -287,8 +281,8 @@ abstract class QueueTest<E> extends CollectionTest<E> {
                 if (rand.nextBoolean()) {
                     E e = iter.next();
                     if (rand.nextBoolean()) {
-                        assertTrue(expected.add(e));
-                        assertTrue(actual.add(e));
+                        expected.add(e);
+                        actual.add(e);
                     } else {
                         expected.offer(e);
                         actual.offer(e);

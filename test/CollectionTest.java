@@ -68,11 +68,12 @@ abstract class CollectionTest<E> {
                 assertThrows(NoSuchElementException.class, iter::next);
         }
 
-        @Test @DisplayName("add returns true")
-        void addReturnsTrue() {
+        @Test @DisplayName("add each returns true")
+        void addEachReturnsTrue() {
             for (E e : data) {
                 assertTrue(expected.add(e));
                 assertTrue(actual.add(e));
+                collectionsAreEqual();
             }
         }
 
@@ -129,7 +130,7 @@ abstract class CollectionTest<E> {
             assertEquals(e, actual.iterator().next());
         }
 
-        @Test @DisplayName("iteroator next twice throws")
+        @Test @DisplayName("iterator next twice throws NoSuchElementException")
         void iteratorNextTwiceThrows() {
             Iterator<E> iter = actual.iterator();
             iter.next();

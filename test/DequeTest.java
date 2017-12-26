@@ -39,6 +39,16 @@ abstract class DequeTest<E> extends QueueTest<E> {
         @AfterEach
         void check() { dequesAreEqual(); }
 
+        @Test @DisplayName("push null throws NullPointerException")
+        void pushNullThrows() {
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NullPointerException.class,
+                             () -> expected.push(null));
+                assertThrows(NullPointerException.class,
+                             () -> actual.push(null));
+            }
+        }
+
         @Test @DisplayName("addFirst null throws NullPointerException")
         void addFirstNullThrows() {
             for (int i = 0; i < 10; ++i) {
@@ -56,6 +66,15 @@ abstract class DequeTest<E> extends QueueTest<E> {
                              () -> expected.addLast(null));
                 assertThrows(NullPointerException.class,
                              () -> actual.addLast(null));
+            }
+        }
+
+        @Test @DisplayName("push each")
+        void pushEach() {
+            for (E e : data) {
+                expected.push(e);
+                actual.push(e);
+                dequesAreEqual();
             }
         }
 
@@ -90,6 +109,14 @@ abstract class DequeTest<E> extends QueueTest<E> {
                     actual.addLast(e);
                 }
                 dequesAreEqual();
+            }
+        }
+
+        @Test @DisplayName("pop throws NoSuchElementException")
+        void popThrows() {
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NoSuchElementException.class, expected::pop);
+                assertThrows(NoSuchElementException.class, actual::pop);
             }
         }
 
@@ -228,6 +255,16 @@ abstract class DequeTest<E> extends QueueTest<E> {
         @AfterEach
         void check() { dequesAreEqual(); }
 
+        @Test @DisplayName("push null throws NullPointerException")
+        void pushNullThrows() {
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NullPointerException.class,
+                             () -> expected.push(null));
+                assertThrows(NullPointerException.class,
+                             () -> actual.push(null));
+            }
+        }
+
         @Test @DisplayName("addFirst null throws NullPointerException")
         void addFirstNullThrows() {
             for (int i = 0; i < 10; ++i) {
@@ -248,6 +285,12 @@ abstract class DequeTest<E> extends QueueTest<E> {
             }
         }
 
+        @Test @DisplayName("pop returns the element")
+        void popReturnsElement() {
+            assertEquals(e, expected.pop());
+            assertEquals(e, actual.pop());
+        }
+
         @Test @DisplayName("removeFirst returns the element")
         void removeFirstReturnsElement() {
             assertEquals(e, expected.removeFirst());
@@ -258,6 +301,16 @@ abstract class DequeTest<E> extends QueueTest<E> {
         void removeLastReturnsElement() {
             assertEquals(e, expected.removeLast());
             assertEquals(e, actual.removeLast());
+        }
+
+        @Test @DisplayName("pop twice throws NoSuchElementException")
+        void popTwiceThrows() {
+            expected.pop();
+            actual.pop();
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NoSuchElementException.class, expected::pop);
+                assertThrows(NoSuchElementException.class, actual::pop);
+            }
         }
 
         @Test @DisplayName("removeFirst twice throws NoSuchElementException")
@@ -378,6 +431,16 @@ abstract class DequeTest<E> extends QueueTest<E> {
         @AfterEach
         void check() { dequesAreEqual(); }
 
+        @Test @DisplayName("push null throws NullPointerException")
+        void pushNullThrows() {
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NullPointerException.class,
+                             () -> expected.push(null));
+                assertThrows(NullPointerException.class,
+                             () -> actual.push(null));
+            }
+        }
+
         @Test @DisplayName("addFirst null throws NullPointerException")
         void addFirstNullThrows() {
             for (int i = 0; i < 10; ++i) {
@@ -398,6 +461,15 @@ abstract class DequeTest<E> extends QueueTest<E> {
             }
         }
 
+        @Test @DisplayName("pop returns the elements")
+        void popReturnsElements() {
+            for (E e : data) {
+                assertEquals(e, expected.pop());
+                assertEquals(e, actual.pop());
+                queuesAreEqual();
+            }
+        }
+
         @Test @DisplayName("removeFirst returns the elements")
         void removeFirstReturnsElements() {
             for (E e : data) {
@@ -415,6 +487,18 @@ abstract class DequeTest<E> extends QueueTest<E> {
                 assertEquals(e, expected.removeLast());
                 assertEquals(e, actual.removeLast());
                 queuesAreEqual();
+            }
+        }
+
+        @Test @DisplayName("pop extra throws NoSuchElementException")
+        void popExtraThrows() {
+            while (!expected.isEmpty()) {
+                expected.pop();
+                actual.pop();
+            }
+            for (int i = 0; i < 10; ++i) {
+                assertThrows(NoSuchElementException.class, expected::pop);
+                assertThrows(NoSuchElementException.class, actual::pop);
             }
         }
 

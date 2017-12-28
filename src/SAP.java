@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
@@ -5,32 +7,37 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class SAP {
 
+    private Query query;
+
     public SAP(Digraph G) {
-        if (G == null)
-            throw new IllegalArgumentException();
+        if (G != null)
+            this.query = new Query(new Digraph(G));
+        else throw new IllegalArgumentException();
     }
 
     public int length(int v, int w) {
-        return 0;
+        return length(Collections.singletonList(v),
+                      Collections.singletonList(w));
     }
 
     public int ancestor(int v, int w) {
-        return 0;
+        return ancestor(Collections.singletonList(v),
+                        Collections.singletonList(w));
     }
 
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        if (v == null || w == null)
-            throw new IllegalArgumentException();
-
-        return 0;
+        if (!isNull(v) && !isNull(w))
+            return query.compute(v, w).getLength();
+        else throw new IllegalArgumentException();
     }
 
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        if (v == null || w == null)
-            throw new IllegalArgumentException();
-
-        return 0;
+        if (!isNull(v) && !isNull(w))
+            return query.compute(v, w).getAncestor();
+        else throw new IllegalArgumentException();
     }
+
+    private boolean isNull(Object x) { return x == null; }
 
     public static void main(String[] args) {
         In in = new In(args[0]);
